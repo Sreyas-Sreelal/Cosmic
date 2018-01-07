@@ -99,3 +99,5 @@ ENV/
 .mypy_cache/
 *.mp3
 *.exe
+*.dll
+token.txt
