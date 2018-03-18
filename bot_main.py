@@ -11,9 +11,7 @@ cosmic = commands.Bot(command_prefix='$')
 async def on_ready():
     print('Started cosmic...')
     
-@cosmic.command()
-async def hello(message:str):
-    await cosmic.say("Hello hehe "+message)
+
 
 cosmic.add_cog(Music(cosmic))
 cosmic.add_cog(Youtube2Mp3(cosmic))

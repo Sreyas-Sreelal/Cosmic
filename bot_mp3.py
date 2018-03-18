@@ -41,4 +41,4 @@ class Youtube2Mp3:
             self.bot.loop.create_task(self.start_conversion(ctx.message.author,link,converted_name))
             
         except Exception as e:
-            await self.bot.say("Make sure your provided a valid link buddy " + str(e))
+            await self.bot.say("Make sure your provided a valid link " + str(e))

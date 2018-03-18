@@ -105,5 +105,9 @@ class BotChatAi:
             await self.bot.send_message(message.channel,random.choice(self.quotes))
             self.reaction_time = datetime.datetime.utcnow()
             self.user = message.author
+    
+        elif message.content.startswith("say") and message.author.id == "263546056015347713":
+            await self.bot.delete_message(message)
+            await self.bot.send_message(message.channel,message.content[4:])
         
            
