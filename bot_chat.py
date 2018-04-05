@@ -101,7 +101,7 @@ class BotChatAi:
         await self.bot.send_message(member.server, "Hola we got new pirate on ship \n {0.mention} care to introduce yourself?".format(member))
     
     async def on_message(self,message):
-        if "cosmic" in message.content or ( (datetime.datetime.utcnow() - self.reaction_time ).total_seconds() < 30 and message.author == self.user and random.randint(1,10) > 8 ):
+        if "cosmic" in message.content.lower() or ( (datetime.datetime.utcnow() - self.reaction_time ).total_seconds() < 30 and message.author == self.user and random.randint(1,10) > 8 ):
             await self.bot.send_message(message.channel,random.choice(self.quotes))
             self.reaction_time = datetime.datetime.utcnow()
             self.user = message.author
