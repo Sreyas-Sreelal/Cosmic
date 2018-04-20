@@ -3,7 +3,7 @@ python:
   - "3.5"
   
 install:
-  - pip install  discord
+  - pip install  discord bs4 youtube-dl asyncio
 
 script:
   - python3 bot_main.py 
