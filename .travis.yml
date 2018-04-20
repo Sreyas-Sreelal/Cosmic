@@ -1,7 +1,9 @@
 language: python
+python:
+  - "3.5"
+  
+install:
+  - pip install  discord
 
 script:
-- python3 -m pip install discord  
-- python3 bot_main.py
-env:
-  - TRAVIS=1
+  - py bot_main.py # or py.test for Python versions 3.5 and below
