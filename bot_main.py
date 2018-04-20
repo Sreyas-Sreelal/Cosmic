@@ -1,3 +1,4 @@
+import bot_crash_detect
 import asyncio
 from discord.ext import commands
 from bot_music import Music
