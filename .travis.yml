@@ -1,6 +1,6 @@
 language: python
 
 script:
-- python3 bot_main
+- python3 bot_main.py
 env:
   - TRAVIS=1
