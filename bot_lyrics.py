@@ -1,9 +1,11 @@
+from bot_log import log
 import discord
 from discord.ext import commands
 import asyncio
 import requests
 from bs4 import BeautifulSoup
 import os
+
 
 class Lyrics:
     def __init__(self,bot):
@@ -22,7 +24,8 @@ class Lyrics:
             
             lyrics_text = soup_lyrics.find('div',{'class':'col-xs-12 col-lg-8 text-center'}).find('div',None).text
             header_text = soup_lyrics.find('div',{'class':'lyricsh'}).text       
-            print('[debug]header : ',header_text,'\n[debug]lryics : ',lyrics_text)
+            log.debug('header : ' + header_text)
+            log.debug('lryics : ' + lyrics_text)
             if(len(lyrics_text)>500):
                 await self.bot.send_message(channel,user.mention+" friend i got the lyrics but its too long so  will write it in a file and send as pm")
                 f = open(song+'.txt','w')
@@ -33,7 +36,7 @@ class Lyrics:
             else:                
                 await self.bot.send_message(channel,'```*\t\t'+header_text+'*\n\n'+lyrics_text+'```')
         except Exception as e:
-            print(str(e))
+            log.exception(str(e))
             await self.bot.send_message(channel,"Sorry :( i can't find it")
     
     @commands.command(pass_context=True)
