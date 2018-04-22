@@ -100,5 +100,6 @@ ENV/
 *.mp3
 *.exe
 *.dll
+
 token.txt
 
