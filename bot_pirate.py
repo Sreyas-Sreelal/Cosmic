@@ -1,3 +1,4 @@
+from bot_log import log
 import discord
 from discord.ext import commands
 import asyncio
@@ -34,8 +35,7 @@ class Torrent:
         
         except Exception as e:
             await self.bot.send_message(channel,"Eww i think something got me there or what i'm searchin is not right")
-            #await self.bot.send_message(channel,'```'+str(e)+'```')
-            
+            log.exception(str(e))
 
     @commands.command(pass_context=True)
     async def searchtor(self,ctx,torrent:str,):
