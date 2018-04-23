@@ -104,3 +104,4 @@ ENV/
 token.txt
 
 *.txt
+*.dump
