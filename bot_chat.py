@@ -3,6 +3,9 @@ from discord.ext import commands
 import asyncio
 import random
 import datetime
+import aiml
+import os
+from bot_log import log
 
 cosmic_quotes = [
     "Thank you",
@@ -88,6 +91,27 @@ cosmic_quotes = [
 
 ]
 
+
+
+k = aiml.Kernel()
+
+if os.path.exists("brain.dump"):
+    log.info("Loading from brain file: " + "brain.dump")
+    k.loadBrain("brain.dump")
+else:
+    log.info("Parsing aiml files")
+    k.bootstrap(learnFiles="cosmic.aiml", commands="load aiml b")
+    log.info("Saving brain file: " + "brain.dump")
+    k.saveBrain("brain.dump")
+
+k.setBotPredicate('master','master Sreyas')
+
+k.setBotPredicate('botmaster','master Sreyas')
+k.setBotPredicate('religion','atheism')
+k.setBotPredicate('name','Cosmic')
+
+k.setBotPredicate('BOTNAME','Cosmic')
+
 class BotChatAi:
     
     def __init__(self,bot):
@@ -101,13 +125,16 @@ class BotChatAi:
         await self.bot.send_message(member.server, "Hola we got new pirate on ship \n {0.mention} care to introduce yourself?".format(member))
     
     async def on_message(self,message):
-        if "cosmic" in message.content.lower() or ( (datetime.datetime.utcnow() - self.reaction_time ).total_seconds() < 30 and message.author == self.user and random.randint(1,10) > 8 ):
-            await self.bot.send_message(message.channel,random.choice(self.quotes))
+        if "<@"+self.bot.user.id+">" in message.content.lower():
+            message_to_send  = message.content.lower().replace("<@"+self.bot.user.id+">","")
+            log.debug("Message to be send is " + message_to_send)
+            response = k.respond(message_to_send)
+            await self.bot.send_message(message.channel,response)
             self.reaction_time = datetime.datetime.utcnow()
             self.user = message.author
-    
         elif message.content.startswith("say") and message.author.id == "263546056015347713":
             await self.bot.delete_message(message)
             await self.bot.send_message(message.channel,message.content[4:])
         
+    
            
