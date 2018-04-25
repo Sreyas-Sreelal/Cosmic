@@ -4,14 +4,14 @@
 
 >Cosmic is a mutli purpose discord bot written in python.The bot can help you in various tasks.Treat him nice and he will treat you the same way.The bot is using modified aiml files of ALICE bot which helps him to understand the users and talk with them.
 
-##Features
+## Features
 1. AI Chat system
 2. Converts youtube videos to mp3
 3. Searches for lyrics of provided song
 4. Music player
 5. Searches and finds torrents as per the need
 
-##Building
+## Building
 >I basically prefer python3.5 to run cosmic and linux servers though it others too.Following steps are to be done inorder to build cosmic
 1. Clone this repository
   ```
@@ -26,9 +26,8 @@
   ```
   python3 bot_main.py
   ```
-##Dependencies
+## Dependencies
 * Discordpy
 * BeautifulSoup
 * ffmpeg
 * Youtubedl
-* 
