@@ -1,0 +1,3 @@
+youtubedl
+bs4
+discord
