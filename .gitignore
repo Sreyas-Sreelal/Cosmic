@@ -101,7 +101,6 @@ ENV/
 *.exe
 *.dll
 
-token.txt
-
-*.txt
 *.dump
+cosmic_crash_report.txt
+token.txt
