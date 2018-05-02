@@ -38,8 +38,9 @@ class Torrent:
             log.exception(str(e))
 
     @commands.command(pass_context=True)
-    async def searchtor(self,ctx,torrent:str,):
+    async def searchtor(self,ctx,*,torrent:str):
         await self.bot.say("Lemme look for " + torrent + " torrent ....")
+        torrent = torrent.replace(" ","+")
         await self.bot.loop.create_task(self.search(torrent,ctx.message.channel,ctx.message.author))
         
        
