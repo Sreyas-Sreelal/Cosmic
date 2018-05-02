@@ -51,7 +51,8 @@ class VoiceState:
         while True:
             self.play_next_song.clear()
             self.current = await self.songs.get()
-            await self.bot.send_message(self.current.channel, 'Now playing ' + str(self.current))
+            embed = discord.Embed(description = 'Now playing ' + str(self.current),color=0x0505ff)
+            await self.bot.send_message(self.current.channel,embed=embed)
             self.current.player.start()
             await self.play_next_song.wait()
 
@@ -132,7 +133,8 @@ class Music:
         else:
             player.volume = 0.6
             entry = VoiceEntry(ctx.message, player)
-            await self.bot.say('Enqueued ' + str(entry))
+            embed = discord.Embed(description ='Enqueued ' + str(entry),color=0x0505ff)
+            await self.bot.say(embed=embed)
             await state.songs.put(entry)
 
     @commands.command(pass_context=True, no_pm=True)
@@ -143,7 +145,8 @@ class Music:
         if state.is_playing():
             player = state.player
             player.volume = value / 100
-            await self.bot.say('Set the volume to {:.0%}'.format(player.volume))
+            embed = discord.Embed(description ='Set the volume to {:.0%}'.format(player.volume),color=0x0505ff)
+            await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True, no_pm=True)
     async def pause(self, ctx):
@@ -188,16 +191,19 @@ class Music:
 
         voter = ctx.message.author
         if voter == state.current.requester:
-            await self.bot.say('Requester requested skipping song...')
+            embed = discord.Embed(description = 'Requester requested skipping song...',color=0xff0000)
+            await self.bot.say(embed=embed)
             state.skip()
         elif voter.id not in state.skip_votes:
             state.skip_votes.add(voter.id)
             total_votes = len(state.skip_votes)
             if total_votes >= 3:
-                await self.bot.say('Skip vote passed, skipping song...')
+                embed = discord.Embed(description = 'Skip vote passed, skipping song...',color=0xff0000)
+                
                 state.skip()
             else:
-                await self.bot.say('Skip vote added, currently at [{}/3]'.format(total_votes))
+                embed = discord.Embed(description = 'Skip vote added, currently at [{}/3]'.format(total_votes),color=0xff0000)
+                await self.bot.say(embed=embed)
         else:
             await self.bot.say('You have already voted to skip this song.')
 
@@ -210,4 +216,6 @@ class Music:
             await self.bot.say('Not playing anything.')
         else:
             skip_count = len(state.skip_votes)
-            await self.bot.say('Now playing {} [skips: {}/3]'.format(state.current, skip_count))
+            embed = discord.Embed(description ='Now playing {} [skips: {}/3]'.format(state.current, skip_count),color=0x0505ff)
+            await self.bot.say(embed=embed)
+
