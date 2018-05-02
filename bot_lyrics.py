@@ -26,22 +26,24 @@ class Lyrics:
             header_text = soup_lyrics.find('div',{'class':'lyricsh'}).text       
             log.debug('header : ' + header_text)
             log.debug('lryics : ' + lyrics_text)
-            if(len(lyrics_text)>500):
-                await self.bot.send_message(channel,user.mention+" friend i got the lyrics but its too long so  will write it in a file and send as pm")
-                f = open(song+'.txt','w')
-                f.write('\t\t'+header_text+'\n\n'+lyrics_text)
-                f.close()
-                await self.bot.send_file(user,song+'.txt')
-                os.remove(song+'.txt')
-            else:                
-                await self.bot.send_message(channel,'```*\t\t'+header_text+'*\n\n'+lyrics_text+'```')
+        
+            await self.bot.send_message(channel,user.mention+" friend i got the lyrics..here is it and also i send a copy as a file in pm")
+            f = open(song.replace("+"," ")+'.txt','w')
+            f.write('\t\t'+header_text+'\n\n'+lyrics_text)
+            f.close()
+            await self.bot.send_file(user,song+'.txt')
+            os.remove(song+'.txt')
+            embed = discord.Embed(title=header_text,description=lyrics_text,color=0xa500ff)             
+            await self.bot.send_message(channel,embed=embed)
+        
         except Exception as e:
             log.exception(str(e))
             await self.bot.send_message(channel,"Sorry :( i can't find it")
     
     @commands.command(pass_context=True)
-    async def lyrics(self,ctx,song:str,):
+    async def lyrics(self,ctx,*,song:str):
         await self.bot.say("Lemme look wait....")
+        song = song.replace(" ","+")
         await self.bot.loop.create_task(self.getlyrics(song,ctx.message.channel,ctx.message.author))
         
        
