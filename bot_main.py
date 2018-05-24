@@ -1,6 +1,7 @@
 import bot_crash_detect
 from bot_log import log
 import asyncio
+import discord
 from discord.ext import commands
 from bot_music import Music
 from bot_mp3 import Youtube2Mp3
@@ -14,7 +15,7 @@ cosmic.remove_command("help")
 
 @cosmic.event
 async def on_ready():
-    log.info('Started cosmic...')
+    log.info('Cosmic started successfully')
 
 cosmic.add_cog(Music(cosmic))
 cosmic.add_cog(Youtube2Mp3(cosmic))
@@ -29,7 +30,8 @@ f.close()
 
 try:
     cosmic.run(token)
-except:
-    log.error("make sure you provided valid token")
+    
+except discord.errors.LoginFailure:
+    log.error("Invalid token provided")
     exit()
     
