@@ -17,6 +17,7 @@ class Lyrics:
         await self.bot.wait_until_ready()
         get_request_search = requests.get(self.link + song+ "&w=songs&p=1" , headers=self.headers)
         soup_search = BeautifulSoup(get_request_search.content,'html.parser')
+        
         try:
             link_from_search  = soup_search.find('td',{'class':'text-left visitedlyr'}).find('a')
             get_request_lyrics = requests.get(link_from_search['href'],headers=self.headers)
@@ -28,18 +29,22 @@ class Lyrics:
             log.debug('lryics : ' + lyrics_text)
         
             await self.bot.send_message(channel,user.mention+" friend i got the lyrics..here is it and also i send a copy as a file in pm")
-            f = open(song.replace("+"," ")+'.txt','w')
+            song_replace = song.replace("+"," ")
+            f = open(song_replace+'.txt','w')
             f.write('\t\t'+header_text+'\n\n'+lyrics_text)
             f.close()
-            await self.bot.send_file(user,song+'.txt')
-            os.remove(song+'.txt')
+            await self.bot.send_file(user,song_replace+'.txt')
+            os.remove(song_replace+'.txt')
             embed = discord.Embed(title=header_text,description=lyrics_text,color=0xa500ff)             
             await self.bot.send_message(channel,embed=embed)
+        
+        except discord.errors.HTTPException:
+            log.exception(str(e))
         
         except Exception as e:
             log.exception(str(e))
             await self.bot.send_message(channel,"Sorry :( i can't find it")
-    
+
     @commands.command(pass_context=True)
     async def lyrics(self,ctx,*,song:str):
         await self.bot.say("Lemme look wait....")
