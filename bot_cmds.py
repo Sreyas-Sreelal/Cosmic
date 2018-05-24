@@ -22,3 +22,9 @@ $join - call cosmic to join \n\
 $convert - converts youtube videos to mp3\n\
 $lyrics - finds lyric of songs",color=0xff0004)
         await self.bot.say(embed=embed)
+
+
+
+
+
+        

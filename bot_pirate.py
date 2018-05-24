@@ -26,8 +26,7 @@ class Torrent:
         
             if magnet is not None:
                 await self.bot.send_message(channel,"Got your torrent's magnet link")
-                embed = discord.Embed(title=name.replace("+"," "),description=magnet,color=0xe1ff00)
-                await self.bot.send_message(channel,embed=embed)
+                await self.bot.send_message(channel,"```"+magnet+"```")
                 if len(about)>10:
                     embed = discord.Embed(title=name.replace("+"," "),description=about[:6000],color=0xff4c00)
                     await self.bot.send_message(channel,embed=embed)

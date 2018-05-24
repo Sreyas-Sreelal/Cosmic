@@ -104,3 +104,4 @@ ENV/
 *.dump
 cosmic_crash_report.txt
 token.txt
+*.txt

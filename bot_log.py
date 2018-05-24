@@ -1,9 +1,9 @@
 import logging
 
 log = logging.Logger('cosmic')
-hndl = logging.FileHandler('cosmic-log.log')
+handle_file = logging.FileHandler('cosmic_log.txt')
 formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
-hndl.setFormatter(formatter)
-log.addHandler(hndl)
+handle_file.setFormatter(formatter)
+log.addHandler(handle_file)
 log.setLevel(logging.DEBUG)
 

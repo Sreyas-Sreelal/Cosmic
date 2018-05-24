@@ -101,26 +101,20 @@ if os.path.exists("brain.dump"):
 else:
     log.info("Parsing aiml files")
     k.bootstrap(learnFiles="cosmic.aiml", commands="load aiml b")
-    log.info("Saving brain file: " + "brain.dump")
+    log.info("Saving brain file: brain.dump")
     k.saveBrain("brain.dump")
 
 k.setBotPredicate('master','master Sreyas')
-
 k.setBotPredicate('botmaster','master Sreyas')
 k.setBotPredicate('religion','atheism')
 k.setBotPredicate('name','Cosmic')
-
 k.setBotPredicate('BOTNAME','Cosmic')
 
 class BotChatAi:
     
     def __init__(self,bot):
         self.bot = bot
-        global cosmic_quotes
-        self.quotes = cosmic_quotes
-        self.reaction_time = datetime.datetime.utcnow()
-        self.user = None
-    
+   
     async def on_member_join(self,member):
         await self.bot.send_message(member.server, "Hola we got new pirate on ship \n {0.mention} care to introduce yourself?".format(member))
     
@@ -130,11 +124,11 @@ class BotChatAi:
             log.debug("Message to be send is " + message_to_send)
             response = k.respond(message_to_send)
             await self.bot.send_message(message.channel,response)
-            self.reaction_time = datetime.datetime.utcnow()
-            self.user = message.author
+
         elif message.content.startswith("say") and message.author.id == "263546056015347713":
-            await self.bot.delete_message(message)
-            await self.bot.send_message(message.channel,message.content[4:])
-        
-    
+            try:
+                await self.bot.delete_message(message)
+                await self.bot.send_message(message.channel,message.content[4:])
+            except discord.errors.Forbidden:
+                await self.bot.send_message("I don't think i can do your request with current permissions you provided me with")   
            
