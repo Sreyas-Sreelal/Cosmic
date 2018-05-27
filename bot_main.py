@@ -9,6 +9,7 @@ from bot_lyrics import Lyrics
 from bot_chat import BotChatAi
 from bot_pirate import Torrent
 from bot_cmds import CMDS
+from bot_memes import Memes
 import os
 
 cosmic = commands.Bot(command_prefix='$')
@@ -24,9 +25,9 @@ cosmic.add_cog(Lyrics(cosmic))
 cosmic.add_cog(BotChatAi(cosmic))
 cosmic.add_cog(Torrent(cosmic))
 cosmic.add_cog(CMDS(cosmic))
+cosmic.add_cog(Memes(cosmic))
 
 token = os.getenv('COSMIC_TOKEN')
-print("TOken is ",token)
 
 try:
     cosmic.run(token)
