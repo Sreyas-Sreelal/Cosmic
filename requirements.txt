@@ -1,3 +1,5 @@
-youtubedl
+youtube_dl
 bs4
 discord
+python-aiml
+requests
