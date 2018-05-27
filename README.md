@@ -12,7 +12,7 @@
 5. Searches and finds torrents as per the need
 
 ## Building
->I basically prefer python3.5 to run cosmic and linux servers though it others too.Following steps are to be done inorder to build cosmic
+>I basically prefer python3.5 to run cosmic and linux servers though it wroks charm in others too.Following steps are to be done inorder to build cosmic
 1. Clone this repository
   ```
   git clone https://www.github.com/sreyas-sreelal/Cosmic.git
@@ -21,7 +21,7 @@
   ```
   pip install -r requirements.txt
   ```
-3. Create ```token.txt``` file containing your discord bot token (only token)
+3. Add COSMIC_TOKEN to environment variables with your token as value
 4. Run bot_main.py file
   ```
   python3 bot_main.py
