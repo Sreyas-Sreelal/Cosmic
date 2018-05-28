@@ -37,7 +37,7 @@ class Youtube2Mp3:
         except Exception as e:
             log.exception(str(e))
         converted_name = link[conv_idx:]+'.mp3'
-        await self.bot.say("Please wait while till i convert your video")
+        await self.bot.say("Please wait while till i convert your video.I will send the mp3 as pm in a second")
         
         try:
             self.bot.loop.create_task(self.start_conversion(ctx.message.author,link,converted_name))
