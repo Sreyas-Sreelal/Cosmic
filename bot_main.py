@@ -18,6 +18,8 @@ cosmic.remove_command("help")
 @cosmic.event
 async def on_ready():
     log.info('Cosmic started successfully')
+    with open('images/cosmic.png', 'rb') as f:
+        await cosmic.edit_profile(avatar=f.read())
 
 cosmic.add_cog(Music(cosmic))
 cosmic.add_cog(Youtube2Mp3(cosmic))
