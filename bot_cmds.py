@@ -20,7 +20,8 @@ $playing - tells what is playing now\n\
 $summon - summons cosmic to a voice channel\n\
 $join - call cosmic to join \n\
 $convert - converts youtube videos to mp3\n\
-$lyrics - finds lyric of songs",color=0xff0004)
+$lyrics - finds lyric of songs\n\
+$wiki - search for wiki content",color=0xff0004)
         await self.bot.say(embed=embed)
 
 

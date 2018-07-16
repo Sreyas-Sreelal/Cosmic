@@ -10,6 +10,7 @@ from bot_chat import BotChatAi
 from bot_pirate import Torrent
 from bot_cmds import CMDS
 from bot_memes import Memes
+from bot_wiki import Wiki
 import os
 
 cosmic = commands.Bot(command_prefix='$')
@@ -28,6 +29,7 @@ cosmic.add_cog(BotChatAi(cosmic))
 cosmic.add_cog(Torrent(cosmic))
 cosmic.add_cog(CMDS(cosmic))
 cosmic.add_cog(Memes(cosmic))
+cosmic.add_cog(Wiki(cosmic))
 
 token = os.getenv('COSMIC_TOKEN')
 
