@@ -3,7 +3,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Sreyas-Sreelal/Cosmic.svg)]() [![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sreyas-sreelal/Cosmic.svg)]() [![license](https://img.shields.io/github/license/sreyas-sreelal/Cosmic.svg)]()
 ![alt text](https://github.com/Sreyas-Sreelal/Cosmic/blob/master/images/cosmic_banner.png?raw=true "Cosmic")
 <p align="center">
-Logo by [ssnjrthegr8](https://github.com/ssnjrthegr8)
+Logo by <a href="https://github.com/ssnjrthegr8">ssnjrthegr8</a>
 </p>
 >Cosmic is a mutli purpose discord bot written in python.The bot can help you in various tasks.Treat him nice and he will treat you the same way.The bot is using modified aiml files of ALICE bot which helps him to understand the users and talk with them.
 
