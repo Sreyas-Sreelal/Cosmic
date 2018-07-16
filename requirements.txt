@@ -4,3 +4,4 @@ discord
 python-aiml
 requests
 pynacl
+wikipedia
