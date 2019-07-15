@@ -5,3 +5,5 @@ authors = ["SyS <sreyassreelal@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+serenity = "0.6"
+log = "0.4"
