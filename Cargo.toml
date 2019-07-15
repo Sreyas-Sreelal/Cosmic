@@ -1,0 +1,7 @@
+[package]
+name = "cosmic"
+version = "0.1.0"
+authors = ["SyS <sreyassreelal@gmail.com>"]
+edition = "2018"
+
+[dependencies]

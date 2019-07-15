@@ -1,7 +1,0 @@
-youtube_dl
-bs4
-discord
-python-aiml
-requests
-pynacl
-wikipedia
