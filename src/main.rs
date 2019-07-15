@@ -1,6 +1,8 @@
+mod command;
+use command::ADMIN_GROUP;
 use log::{error, info, Level, Metadata, Record};
+use serenity::framework::StandardFramework;
 use serenity::{model::gateway::Ready, prelude::*};
-
 //Handler
 //Handles every incoming events in the bot
 struct Handler;
@@ -37,7 +39,13 @@ fn main() -> Result<(), log::SetLoggerError> {
 
     let token = std::env::var("COSMIC_TOKEN")
         .expect("Error cannot fetch token.Make sure environment variable COSMIC_TOKEN is set");
+
     let mut client = Client::new(&token, Handler).expect("Error Cannot build client object");
+    client.with_framework(
+        StandardFramework::new()
+            .configure(|c| c.prefix("$"))
+            .group(&ADMIN_GROUP),
+    );
     if let Err(error) = client.start() {
         error!("{}", error);
     }
