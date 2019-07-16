@@ -1,8 +1,9 @@
 //add commands here
 mod cmd_meme;
 mod cmd_say;
+mod cmd_wiki;
 
-use crate::command::{cmd_meme::*, cmd_say::*};
+use crate::command::{cmd_meme::*, cmd_say::*, cmd_wiki::*};
 
 use serenity::framework::standard::macros::group;
 
@@ -17,5 +18,5 @@ group!({
 
 group!({
     name: "general",
-    commands: [meme],
+    commands: [meme,wiki],
 });

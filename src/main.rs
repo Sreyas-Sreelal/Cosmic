@@ -1,7 +1,8 @@
 mod command;
 mod http;
 mod imgflip;
-use command::{ADMIN_GROUP, GENERAL_GROUP};
+
+use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
 
 use log::{error, info};
 use serenity::framework::StandardFramework;
