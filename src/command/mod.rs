@@ -1,6 +1,7 @@
 //add commands here
-mod say;
-use say::SAY_COMMAND;
+mod cmd_say;
+
+use crate::command::cmd_say::*;
 
 use serenity::framework::standard::macros::group;
 
@@ -12,3 +13,10 @@ group!({
     },
     commands: [say],
 });
+
+//
+//group!({
+//   name: "general",
+//    commands: [say],
+//});
+//
