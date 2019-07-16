@@ -1,7 +1,8 @@
 //add commands here
+mod cmd_meme;
 mod cmd_say;
 
-use crate::command::cmd_say::*;
+use crate::command::{cmd_meme::*, cmd_say::*};
 
 use serenity::framework::standard::macros::group;
 
@@ -14,9 +15,7 @@ group!({
     commands: [say],
 });
 
-//
-//group!({
-//   name: "general",
-//    commands: [say],
-//});
-//
+group!({
+    name: "general",
+    commands: [meme],
+});
