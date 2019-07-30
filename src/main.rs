@@ -6,7 +6,9 @@ mod imgflip;
 use crate::ai::{brain_init, respond};
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
 
+use lazy_static::lazy_static;
 use log::{error, info};
+use regex::Regex;
 use serenity::framework::StandardFramework;
 use serenity::{
     model::{channel::Message, gateway::Ready},
@@ -27,7 +29,8 @@ impl EventHandler for Handler {
 
         if let Ok(user) = ctx.http.get_current_user() {
             if msg.mentions_user_id(user.id) {
-                let response = respond(&msg.content);
+                let input = remove_mention(&msg.content);
+                let response = respond(&input);
                 msg.channel_id.say(&ctx.http, response).unwrap();
             }
         }
@@ -56,4 +59,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
+}
+
+//removes mentions from the message
+fn remove_mention(msg: &str) -> String {
+    lazy_static! {
+        static ref MENTION_RE: Regex = Regex::new("<@[0-9]+>").unwrap();
+    }
+
+    MENTION_RE.replace_all(&msg, "").to_string()
 }
