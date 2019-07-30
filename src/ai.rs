@@ -8,6 +8,11 @@ pub struct AI {
     instance: Eliza,
 }
 
+//Due to conflict in mutability in respond method in eliza and message trait in serenity
+//declare BRAIN in global state
+//TODO: a method to achieve same without unsafe code
+pub static mut BRAIN: Option<AI> = None;
+
 impl AI {
     pub fn new(location: &str) -> Result<Self, Box<dyn std::error::Error>> {
         let eliza = Eliza::new(location)?;
@@ -16,7 +21,7 @@ impl AI {
     }
 
     //Generates responses for the input according to script defined
-    pub fn respond(&mut self, input: &str) -> String {
+    pub fn genrate_response(&mut self, input: &str) -> String {
         self.instance.respond(input)
     }
 
@@ -29,4 +34,19 @@ impl AI {
     //pub fn greet(&self) -> String {
     //    self.instance.greet()
     //}
+}
+
+//returns response from static reference
+pub fn respond(input: &str) -> String {
+    unsafe { BRAIN.as_mut().unwrap().genrate_response(input) }
+}
+
+//Initialise brain in the static reference
+pub fn brain_init(location: &str) -> Result<(), Box<dyn std::error::Error>> {
+    unsafe {
+        let brain = AI::new(location)?;
+        BRAIN = Some(brain);
+    }
+
+    Ok(())
 }
