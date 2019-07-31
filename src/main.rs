@@ -2,6 +2,7 @@ mod ai;
 mod command;
 mod http;
 mod imgflip;
+mod torrent;
 
 use crate::ai::{brain_init, respond};
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
