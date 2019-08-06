@@ -5,7 +5,7 @@ authors = ["SyS <sreyassreelal@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-serenity = "0.6"
+serenity = {git = "https://github.com/Sreyas-Sreelal/serenity",branch="ytdl_search",features = ["voice"]}
 log = "0.4"
 minihttp = {git = "https://github.com/Sreyas-Sreelal/minihttp"}
 serde = "1.0"

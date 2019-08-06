@@ -1,7 +1,7 @@
 use crate::http::{HttpMethod, HttpRequest};
 use crate::torrent::types::*;
+use log::debug;
 use scraper::{Html, Selector};
-use log::{debug};
 
 impl TorrentClient {
     //get_proxy()

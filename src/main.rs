@@ -12,9 +12,11 @@ use log::{error, info};
 use regex::Regex;
 use serenity::framework::StandardFramework;
 use serenity::{
+    client::bridge::voice::ClientVoiceManager,
     model::{channel::Message, gateway::Ready},
     prelude::*,
 };
+use std::{env, sync::Arc};
 
 //Handler
 //Handles every incoming events in the bot
@@ -38,16 +40,28 @@ impl EventHandler for Handler {
     }
 }
 
+struct VoiceManager;
+
+impl TypeMapKey for VoiceManager {
+    type Value = Arc<Mutex<ClientVoiceManager>>;
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     //Initialise log and set trace level
     env_logger::init();
 
-    let token = std::env::var("COSMIC_TOKEN")
+    let token = env::var("COSMIC_TOKEN")
         .expect("Error cannot fetch token.Make sure environment variable COSMIC_TOKEN is set");
 
     brain_init("cosmic_brain.json")?;
 
     let mut client = Client::new(&token, Handler).expect("Error Cannot build client object");
+
+    {
+        let mut data = client.data.write();
+        data.insert::<VoiceManager>(Arc::clone(&client.voice_manager));
+    }
+
     client.with_framework(
         StandardFramework::new()
             .configure(|c| c.prefix("$"))
