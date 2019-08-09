@@ -1,60 +1,20 @@
 mod ai;
 mod command;
+mod events;
 mod http;
 mod imgflip;
+mod storage;
 mod torrent;
+mod utils;
 
 use crate::ai::AI;
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
+use crate::events::Handler;
+use crate::storage::{AIStore, VoiceManager};
 
-use lazy_static::lazy_static;
-use log::{error, info};
-use regex::Regex;
-use serenity::framework::StandardFramework;
-use serenity::{
-    client::bridge::voice::ClientVoiceManager,
-    model::{channel::Message, gateway::Ready},
-    prelude::*,
-};
+use log::error;
+use serenity::{framework::StandardFramework, prelude::*};
 use std::{env, sync::Arc};
-
-//Handler
-//Handles every incoming events in the bot
-struct Handler;
-
-impl EventHandler for Handler {
-    fn ready(&self, _ctx: Context, data: Ready) {
-        info!("Connected to account : {}", data.user.name);
-    }
-
-    fn message(&self, ctx: Context, msg: Message) {
-        info!("<{}> : {}", msg.author.name, msg.content);
-        let brain = ctx
-            .data
-            .read()
-            .get::<AIStore>()
-            .cloned()
-            .expect("Expected brain in ShareMap.");
-        if let Ok(user) = ctx.http.get_current_user() {
-            if msg.mentions_user_id(user.id) {
-                let input = remove_mention(&msg.content);
-                let mut brain = brain.lock();
-                let response = brain.generate_response(&input);
-                msg.channel_id.say(&ctx.http, response).unwrap();
-            }
-        }
-    }
-}
-
-struct VoiceManager;
-impl TypeMapKey for VoiceManager {
-    type Value = Arc<Mutex<ClientVoiceManager>>;
-}
-
-pub struct AIStore;
-impl TypeMapKey for AIStore {
-    type Value = Arc<Mutex<AI>>;
-}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     //Initialise log and set trace level
@@ -83,13 +43,4 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
-}
-
-//removes mentions from the message
-fn remove_mention(msg: &str) -> String {
-    lazy_static! {
-        static ref MENTION_RE: Regex = Regex::new("<@[0-9]+>").unwrap();
-    }
-
-    MENTION_RE.replace_all(&msg, "").to_string()
 }
