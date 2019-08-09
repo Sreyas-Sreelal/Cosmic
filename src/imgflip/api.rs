@@ -6,7 +6,7 @@ use rand::seq::SliceRandom;
 //sends request to imgflip api to get a list of memes
 //gets a random meme
 //returns it
-pub fn get_memes() -> Result<Memes, Box<std::error::Error>> {
+pub fn get_memes() -> Result<Memes, Box<dyn std::error::Error>> {
     let request = HttpRequest {
         url: "https://api.imgflip.com/get_memes".to_string(),
         method: HttpMethod::Get,

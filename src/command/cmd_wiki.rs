@@ -13,7 +13,7 @@ fn wiki(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
     Ok(())
 }
 
-pub fn get_wiki_summary(keyword: &str) -> Result<String, Box<std::error::Error>> {
+pub fn get_wiki_summary(keyword: &str) -> Result<String, Box<dyn std::error::Error>> {
     let url = format!(
         "https://en.wikipedia.org/w/api.php?action=opensearch&search={}&limit=1&redirect=return",
         keyword
