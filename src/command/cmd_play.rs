@@ -48,9 +48,9 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
         .get::<VoiceManager>()
         .cloned()
         .expect("Expected VoiceManager in ShareMap.");
-    
+
     let mut manager = manager_lock.lock();
-    
+
     match manager.get_mut(bot_guild_id) {
         Some(currrent_handler) => {
             let bot_voice_channel_id = currrent_handler.channel_id;

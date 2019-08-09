@@ -4,7 +4,7 @@ mod http;
 mod imgflip;
 mod torrent;
 
-use crate::ai::{brain_init, respond};
+use crate::ai::AI;
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
 
 use lazy_static::lazy_static;
@@ -29,11 +29,17 @@ impl EventHandler for Handler {
 
     fn message(&self, ctx: Context, msg: Message) {
         info!("<{}> : {}", msg.author.name, msg.content);
-
+        let brain = ctx
+            .data
+            .read()
+            .get::<AIStore>()
+            .cloned()
+            .expect("Expected brain in ShareMap.");
         if let Ok(user) = ctx.http.get_current_user() {
             if msg.mentions_user_id(user.id) {
                 let input = remove_mention(&msg.content);
-                let response = respond(&input);
+                let mut brain = brain.lock();
+                let response = brain.generate_response(&input);
                 msg.channel_id.say(&ctx.http, response).unwrap();
             }
         }
@@ -41,9 +47,13 @@ impl EventHandler for Handler {
 }
 
 struct VoiceManager;
-
 impl TypeMapKey for VoiceManager {
     type Value = Arc<Mutex<ClientVoiceManager>>;
+}
+
+pub struct AIStore;
+impl TypeMapKey for AIStore {
+    type Value = Arc<Mutex<AI>>;
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -53,13 +63,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let token = env::var("COSMIC_TOKEN")
         .expect("Error cannot fetch token.Make sure environment variable COSMIC_TOKEN is set");
 
-    brain_init("cosmic_brain.json")?;
-
     let mut client = Client::new(&token, Handler).expect("Error Cannot build client object");
 
     {
         let mut data = client.data.write();
         data.insert::<VoiceManager>(Arc::clone(&client.voice_manager));
+        data.insert::<AIStore>(Arc::new(Mutex::new(AI::new("cosmic_brain.json")?)));
     }
 
     client.with_framework(
