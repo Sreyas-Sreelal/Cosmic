@@ -59,18 +59,18 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
                     msg.channel_id.say(&ctx.http, "Error joining the channel")?;
                     return Ok(());
                 }
-            }
-
-            let bot_voice_channel_id = bot_voice_channel_id.unwrap();
-            if bot_voice_channel_id != user_voice_channel_id {
-                msg.reply(
-                    &ctx,
-                    &format!(
-                        "Im already playing a song in {}",
-                        bot_voice_channel_id.mention()
-                    ),
-                )?;
-                return Ok(());
+            } else {
+                let bot_voice_channel_id = bot_voice_channel_id.unwrap();
+                if bot_voice_channel_id != user_voice_channel_id {
+                    msg.reply(
+                        &ctx,
+                        &format!(
+                            "Im already playing a song in {}",
+                            bot_voice_channel_id.mention()
+                        ),
+                    )?;
+                    return Ok(());
+                }
             }
         }
         None => {
@@ -83,7 +83,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
 
     let music_handler = manager.get_mut(bot_guild_id);
     //voice::ffmpeg(path: P)
-    let source = match voice::ytdl(&name) {
+    let source = match voice::ytdl_search(&name) {
         Ok(source) => source,
         Err(why) => {
             println!("Err starting source: {:?}", why);

@@ -65,7 +65,7 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
             }
         }
     }
-
+    handler.stop();
     manager.remove(bot_guild_id);
     msg.channel_id.say(&ctx.http, "Stopped music!")?;
 
