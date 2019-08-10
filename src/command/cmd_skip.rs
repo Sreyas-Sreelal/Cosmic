@@ -91,6 +91,6 @@ fn skip(ctx: &mut Context, msg: &Message) -> CommandResult {
     } else {
         msg.reply(&ctx, "I'm not playing any song")?;
     }
-    
+
     Ok(())
 }
