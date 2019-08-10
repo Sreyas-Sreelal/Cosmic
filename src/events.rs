@@ -44,6 +44,7 @@ impl EventHandler for Handler {
                         }
                     }
                 }
+                std::thread::sleep(std::time::Duration::from_secs(1));
             }
         });
     }
