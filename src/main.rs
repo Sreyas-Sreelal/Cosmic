@@ -6,6 +6,7 @@ mod imgflip;
 mod storage;
 mod torrent;
 mod utils;
+mod wiki;
 
 use crate::ai::AI;
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
