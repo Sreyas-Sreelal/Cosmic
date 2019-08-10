@@ -1,8 +1,11 @@
+use crate::storage::PlayListStore;
 use crate::VoiceManager;
+
 use serenity::framework::standard::{macros::command, Args, CommandResult};
 use serenity::model::channel::Message;
 use serenity::prelude::*;
 use serenity::voice;
+use std::collections::VecDeque;
 
 //plays a song by name
 #[command]
@@ -81,7 +84,6 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
         }
     }
 
-    let music_handler = manager.get_mut(bot_guild_id);
     //voice::ffmpeg(path: P)
     let source = match voice::ytdl_search(&name) {
         Ok(source) => source,
@@ -91,10 +93,32 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
             return Ok(());
         }
     };
+    let playlist = ctx
+        .data
+        .read()
+        .get::<PlayListStore>()
+        .cloned()
+        .expect("Can't access playlist");
+
+    let mut playlist = playlist.lock();
+    let music_handler = manager.get_mut(bot_guild_id);
     let handler = music_handler.unwrap();
-    handler.stop();
-    handler.play(source);
-    msg.channel_id.say(&ctx.http, "Playing song")?;
+    match playlist.get_mut(&user_guild_id) {
+        None => {
+            msg.channel_id.say(&ctx.http, "Playing song")?;
+            handler.stop();
+            let locked_audio = handler.play_returning(source);
+            let mut queue: VecDeque<voice::LockedAudio> = VecDeque::new();
+            queue.push_back(locked_audio);
+            playlist.insert(user_guild_id, queue);
+        }
+        Some(music) => {
+            let locked_audio = handler.play_returning(source);
+            locked_audio.lock().pause();
+            music.push_back(locked_audio);
+            msg.channel_id.say(&ctx.http, "Adding to queue")?;
+        }
+    }
 
     Ok(())
 }

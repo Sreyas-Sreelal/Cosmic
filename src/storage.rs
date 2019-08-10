@@ -1,7 +1,12 @@
 use crate::ai::AI;
 
-use serenity::{client::bridge::voice::ClientVoiceManager, prelude::*};
-use std::sync::Arc;
+use serenity::{
+    client::bridge::voice::ClientVoiceManager, model::id::GuildId, prelude::*, voice::LockedAudio,
+};
+use std::{
+    collections::{HashMap, VecDeque},
+    sync::Arc,
+};
 
 pub struct VoiceManager;
 impl TypeMapKey for VoiceManager {
@@ -11,4 +16,9 @@ impl TypeMapKey for VoiceManager {
 pub struct AIStore;
 impl TypeMapKey for AIStore {
     type Value = Arc<Mutex<AI>>;
+}
+
+pub struct PlayListStore;
+impl TypeMapKey for PlayListStore {
+    type Value = Arc<Mutex<HashMap<GuildId, VecDeque<LockedAudio>>>>;
 }

@@ -10,11 +10,11 @@ mod utils;
 use crate::ai::AI;
 use crate::command::{ADMIN_GROUP, GENERAL_GROUP};
 use crate::events::Handler;
-use crate::storage::{AIStore, VoiceManager};
+use crate::storage::{AIStore, PlayListStore, VoiceManager};
 
 use log::error;
 use serenity::{framework::StandardFramework, prelude::*};
-use std::{env, sync::Arc};
+use std::{collections::HashMap, env, sync::Arc};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     //Initialise log and set trace level
@@ -29,6 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut data = client.data.write();
         data.insert::<VoiceManager>(Arc::clone(&client.voice_manager));
         data.insert::<AIStore>(Arc::new(Mutex::new(AI::new("cosmic_brain.json")?)));
+        data.insert::<PlayListStore>(Arc::new(Mutex::new(HashMap::new())));
     }
 
     client.with_framework(

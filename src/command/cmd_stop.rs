@@ -1,4 +1,6 @@
+use crate::storage::PlayListStore;
 use crate::VoiceManager;
+
 use serenity::framework::standard::{macros::command, CommandResult};
 use serenity::model::channel::Message;
 use serenity::prelude::*;
@@ -60,13 +62,22 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
         }
         Some(id) => {
             if id != user_voice_channel_id {
-                msg.reply(&ctx, "I'm not playing a song in your voice channel")?;
+                msg.reply(&ctx, "I'm not playing any song in your voice channel")?;
                 return Ok(());
             }
         }
     }
     handler.stop();
     manager.remove(bot_guild_id);
+    let playlist = ctx
+        .data
+        .read()
+        .get::<PlayListStore>()
+        .cloned()
+        .expect("Can't access playlist");
+    let mut playlist = playlist.lock();
+    playlist.remove(&bot_guild_id);
+
     msg.channel_id.say(&ctx.http, "Stopped music!")?;
 
     Ok(())
