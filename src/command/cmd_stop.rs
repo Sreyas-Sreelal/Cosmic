@@ -1,4 +1,5 @@
 use crate::storage::PlayListStore;
+use crate::utils::*;
 use crate::VoiceManager;
 
 use serenity::framework::standard::{macros::command, CommandResult};
@@ -11,7 +12,7 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
     let guild = match msg.guild(&ctx.cache) {
         Some(guild) => guild,
         None => {
-            msg.channel_id.say(&ctx.http, "Not allowed in dms")?;
+            send_error_msg(msg.channel_id, None, "Not allowed in dms", &ctx.http)?;
             return Ok(());
         }
     };
@@ -19,8 +20,12 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
     let bot_guild_id = match ctx.cache.read().guild_channel(msg.channel_id) {
         Some(channel) => channel.read().guild_id,
         None => {
-            msg.channel_id
-                .say(&ctx.http, "Error finding channel info")?;
+            send_error_msg(
+                msg.channel_id,
+                None,
+                "Error finding channel info",
+                &ctx.http,
+            )?;
             return Ok(());
         }
     };
@@ -77,8 +82,6 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
         .expect("Can't access playlist");
     let mut playlist = playlist.lock();
     playlist.remove(&bot_guild_id);
-
-    msg.channel_id.say(&ctx.http, "Stopped music!")?;
-
+    send_info_msg(msg.channel_id, None, "Stopped music!", &ctx.http)?;
     Ok(())
 }

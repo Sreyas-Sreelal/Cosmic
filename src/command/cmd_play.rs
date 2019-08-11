@@ -1,4 +1,5 @@
 use crate::storage::PlayListStore;
+use crate::utils::*;
 use crate::VoiceManager;
 
 use serenity::framework::standard::{macros::command, Args, CommandResult};
@@ -15,7 +16,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
     let guild = match msg.guild(&ctx.cache) {
         Some(guild) => guild,
         None => {
-            msg.channel_id.say(&ctx.http, "Not allowed in dms")?;
+            send_error_msg(msg.channel_id, None, "Not allowed in dms", &ctx.http)?;
             return Ok(());
         }
     };
@@ -23,8 +24,12 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
     let bot_guild_id = match ctx.cache.read().guild_channel(msg.channel_id) {
         Some(channel) => channel.read().guild_id,
         None => {
-            msg.channel_id
-                .say(&ctx.http, "Error finding channel info")?;
+            send_error_msg(
+                msg.channel_id,
+                None,
+                "Error finding channel info",
+                &ctx.http,
+            )?;
             return Ok(());
         }
     };
@@ -59,7 +64,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
             let bot_voice_channel_id = currrent_handler.channel_id;
             if bot_voice_channel_id.is_none() {
                 if manager.join(user_guild_id, user_voice_channel_id).is_none() {
-                    msg.channel_id.say(&ctx.http, "Error joining the channel")?;
+                    send_error_msg(msg.channel_id, None, "Error joining the channel", &ctx.http)?;
                     return Ok(());
                 }
             } else {
@@ -78,7 +83,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
         }
         None => {
             if manager.join(user_guild_id, user_voice_channel_id).is_none() {
-                msg.channel_id.say(&ctx.http, "Error joining the channel")?;
+                send_error_msg(msg.channel_id, None, "Error joining the channel", &ctx.http)?;
                 return Ok(());
             }
         }
@@ -89,7 +94,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
         Ok(source) => source,
         Err(why) => {
             println!("Err starting source: {:?}", why);
-            msg.channel_id.say(&ctx.http, "Error sourcing ffmpeg")?;
+            send_error_msg(msg.channel_id, None, "Error sourcing ffmpeg", &ctx.http)?;
             return Ok(());
         }
     };
@@ -105,7 +110,12 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
     let handler = music_handler.unwrap();
     match playlist.get_mut(&user_guild_id) {
         None => {
-            msg.channel_id.say(&ctx.http, "Playing song")?;
+            send_info_msg(
+                msg.channel_id,
+                None,
+                &format!("Playing {}", name),
+                &ctx.http,
+            )?;
             handler.stop();
             let locked_audio = handler.play_returning(source);
             let mut queue: VecDeque<voice::LockedAudio> = VecDeque::new();
@@ -116,7 +126,7 @@ fn play(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
             let locked_audio = handler.play_returning(source);
             locked_audio.lock().pause();
             music.push_back(locked_audio);
-            msg.channel_id.say(&ctx.http, "Adding to queue")?;
+            send_info_msg(msg.channel_id, None, "Adding to queue", &ctx.http)?;
         }
     }
 

@@ -3,6 +3,7 @@ use serenity::model::channel::Message;
 use serenity::prelude::*;
 
 use crate::torrent::types::TorrentClient;
+use crate::utils::*;
 
 //command say
 //deletes the command message
@@ -15,11 +16,32 @@ fn torrent(ctx: &mut Context, msg: &Message, args: Args) -> CommandResult {
     };
 
     let pageinfo = client.get_torrent_info(&input)?;
-    let message = format!("```{}```", pageinfo.description);
-    msg.channel_id.say(&ctx.http, message)?;
 
-    let message = format!("***magnet url***\n```{}```", pageinfo.magnet_url);
-    msg.channel_id.say(&ctx.http, message)?;
+    if pageinfo.description.len() <= 2000 {
+        send_success_msg(
+            msg.channel_id,
+            Some(&pageinfo.name),
+            &pageinfo.description,
+            &ctx.http,
+        )?;
+    } else {
+        send_warn_msg(
+            msg.channel_id,
+            Some(&pageinfo.name),
+            &format!(
+                "The description is too long to send in discord\nRefer it here {}",
+                pageinfo.url
+            ),
+            &ctx.http,
+        )?;
+    }
+
+    send_success_msg(
+        msg.channel_id,
+        Some("magnet url"),
+        &pageinfo.magnet_url,
+        &ctx.http,
+    )?;
 
     Ok(())
 }

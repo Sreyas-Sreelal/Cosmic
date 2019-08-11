@@ -1,4 +1,5 @@
 use crate::storage::PlayListStore;
+use crate::utils::*;
 use crate::VoiceManager;
 
 use serenity::framework::standard::{macros::command, CommandResult};
@@ -11,7 +12,7 @@ fn skip(ctx: &mut Context, msg: &Message) -> CommandResult {
     let guild = match msg.guild(&ctx.cache) {
         Some(guild) => guild,
         None => {
-            msg.channel_id.say(&ctx.http, "Not allowed in dms")?;
+            send_error_msg(msg.channel_id, None, "Not allowed in dms", &ctx.http)?;
             return Ok(());
         }
     };
@@ -19,8 +20,12 @@ fn skip(ctx: &mut Context, msg: &Message) -> CommandResult {
     let bot_guild_id = match ctx.cache.read().guild_channel(msg.channel_id) {
         Some(channel) => channel.read().guild_id,
         None => {
-            msg.channel_id
-                .say(&ctx.http, "Error finding channel info")?;
+            send_error_msg(
+                msg.channel_id,
+                None,
+                "Error finding channel info",
+                &ctx.http,
+            )?;
             return Ok(());
         }
     };
@@ -79,7 +84,7 @@ fn skip(ctx: &mut Context, msg: &Message) -> CommandResult {
     if let Some(playlist) = music.get_mut(&bot_guild_id) {
         if let Some(audio) = playlist.pop_front() {
             audio.lock().pause();
-            msg.channel_id.say(&ctx.http, "Skipping!")?;
+            send_info_msg(msg.channel_id, None, "Skipping", &ctx.http)?;
             if playlist.is_empty() {
                 music.remove(&bot_guild_id);
                 handler.stop();
