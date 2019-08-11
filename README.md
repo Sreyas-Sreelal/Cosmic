@@ -19,18 +19,18 @@ and more...
 
 ## Building
 1. Clone this repository
-  ```
-  git clone https://www.github.com/sreyas-sreelal/Cosmic.git
-  ```
+    ```
+    git clone https://www.github.com/sreyas-sreelal/Cosmic.git
+    ```
 2. Use cargo to build
-  ```
-  cargo build --release
-  ```
-3. Add COSMIC_TOKEN to environment variables with your token as value
+    ```
+    cargo build --release
+    ```
+3. Add `COSMIC_TOKEN` to environment variables with your token as value
 
-4. Run bot_main.py file
-  ```
-  ./cosmic
-  ```
+4. Run
+    ```
+    ./cosmic
+    ```
 ## Notes
 Cosmic requires ffmpeg and youtubedl for audio processing.So install them before using the bot.
