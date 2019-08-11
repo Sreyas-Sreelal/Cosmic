@@ -1,3 +1,3 @@
 pub mod api;
-pub mod types;
 mod tests;
+pub mod types;
