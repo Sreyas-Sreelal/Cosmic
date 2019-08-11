@@ -1,10 +1,10 @@
 use minihttp::request::Request;
-use std::collections::HashMap;
+//use std::collections::HashMap;
 
 //Basic http methods
 pub enum HttpMethod {
     Get,
-    Post,
+    //Post,
 }
 
 //Represents Request object
@@ -20,18 +20,15 @@ impl HttpRequest {
 
         let method = match self.method {
             HttpMethod::Get => requests_obj.get(),
-
-            HttpMethod::Post => {
-                let body = &self.body.clone().unwrap();
-                requests_obj.body_str(&body);
-
+            //HttpMethod::Post => {
+            //    let body = &self.body.clone().unwrap();
+            //    requests_obj.body_str(&body);
                 //set content type to application/json
-                let mut headers = HashMap::new();
-                headers.insert("Content-Type".to_string(), "application/json".to_string());
-                requests_obj.headers(headers);
-
-                requests_obj.post()
-            }
+            //    let mut headers = HashMap::new();
+            //    headers.insert("Content-Type".to_string(), "application/json".to_string());
+            //    requests_obj.headers(headers);
+            //    requests_obj.post()
+            //}
         };
 
         let data = method.send()?;
