@@ -38,5 +38,5 @@ pub fn get_wiki_summary(keyword: &str) -> Result<Wiki, Box<dyn std::error::Error
         .unwrap()
         .to_string();
 
-    Ok(Wiki::new(summary, title))
+    Ok(Wiki::new(title, summary))
 }
