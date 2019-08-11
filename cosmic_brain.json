@@ -1,24 +1,24 @@
 {
     "greetings": [
-      "How do you do. Please tell me your problems.",
-      "Please tell me what's been bothering you.",
-      "Is something troubling you?"
+      "Hey sup how are you?",
+      "Ahoi mate",
+      "Cosmic is at your service"
     ],
     "farewells": [
       "Goodbye.  It was nice talking to you.",
       "Goodbye.  This was really a nice talk.",
-      "Goodbye.  I'm looking forward to our next session.",
-      "This was a good session, wasn't it -- but time is over now.   Goodbye.",
-      "Maybe we could discuss this moreover in our next session?   Goodbye."
+      "Goodbye",
+      "Time's up cya later",
+      "Maybe later!"
     ],
     "fallbacks": [
-      "I'm not sure I understand you fully.",
-      "Please go on.",
-      "What does that suggest to you?",
-      "Do you feel strongly about discussing such things?",
+      "Are you speaking English?",
+      "Ehh o..k.. i guess?",
+      "That sound no sense to me",
+      "I don't want to talk about that now",
       "That is interesting.  Please continue.",
       "Tell me more about that.",
-      "Does talking about this bother you?"
+      "😕"
     ],
     "transforms": [
       {
@@ -245,9 +245,9 @@
             "decomposition_rule": "(.+)",
             "reassembly_rules": [
               "Please don't apologise.",
-              "Apologies are not necessary.",
-              "I've told you that apologies are not required.",
-              "It did not bother me.  Please continue."
+              "Sorry for what?",
+              "np",
+              "Do you really think i have emotions?"
             ]
           }
         ]
@@ -386,6 +386,7 @@
               "Can't you be more positive?",
               "You aren't sure?",
               "Don't you know?",
+              "You sure about that?",
               "How likely, would you estimate?"
             ]
           }
@@ -399,8 +400,8 @@
             "memorise": false,
             "decomposition_rule": "(.+)",
             "reassembly_rules": [
-              "I am not interested in names.",
-              "I've told you before, I don't care about names -- please continue."
+              "My creator,Sreyas,named me Cosmic",
+              "My name is Cosmic"
             ]
           }
         ]
@@ -413,8 +414,9 @@
             "memorise": false,
             "decomposition_rule": "(.+)",
             "reassembly_rules": [
-              "How do you do.  Please state your problem.",
-              "Hi.  What seems to be your problem?"
+              "Sup?",
+              "Hi there",
+              "Yo!"
             ]
           }
         ]
@@ -521,7 +523,8 @@
               "Are you worried about someone else's $2?",
               "Really, my $2?",
               "What makes you think of my $2?",
-              "Do you want my $2?"
+              "Do you want my $2?",
+              "If you want to know more about me,go through my source code\n https://github.com/Sreyas-Sreelal/Cosmic"
             ]
           }
         ]
