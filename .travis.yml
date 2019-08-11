@@ -1,20 +1,12 @@
 language: rust
 cache: cargo
 dist: trusty
-python:
-  - "3.5"
 
 matrix:
   fast_finish: true
   include:
   - rust: stable
     os: linux
-
-before_install:
-  - sudo add-apt-repository -y ppa:mc3man/trusty-media
-  - sudo apt-get update
-  - sudo apt-get install -y ffmpeg
-  - pip install youtube_dl --user
 
 script:
 - cargo build --release --verbose
