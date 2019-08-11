@@ -1,9 +1,13 @@
-language: python
-python:
-  - "3.5"
-  
-install:
-  - pip install  bs4 requests
+language: rust
+cache: cargo
+dist: trusty
+
+matrix:
+  fast_finish: true
+  include:
+  - rust: stable
+    os: linux
 
 script:
-  - python3 bot_test.py 
+- cargo build --release --verbose
+- cargo test

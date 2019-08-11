@@ -6,32 +6,31 @@
 Logo by <a href="https://github.com/ssnjrthegr8">ssnjrthegr8</a>
 </p>
 
->Cosmic is a mutli purpose discord bot written in python.The bot can help you in various tasks.Treat him nice and he will treat you the same way.The bot is using modified aiml files of ALICE bot which helps him to understand the users and talk with them.
+>Cosmic is a mutli purpose discord bot written in rust.The bot can help you in various tasks.Treat him nice and he will treat you the same way.Basic NLP capability is achieved with the help of [eliza-rs](https://github.com/arosspope/eliza-rs)
 
 ## Features
-1. AI Chat system
-2. Converts youtube videos to mp3
-3. Searches for lyrics of provided song
-4. Music player
-5. Searches and finds torrents as per the need
+1. Basic AI Chat system
+2. Searches for lyrics of provided song
+3. Music player
+4. Searches and finds torrents as per the need
+5. Searches wiki 
+6. Random meme generator
+and more...
 
 ## Building
->I basically prefer python3.5 to run cosmic and linux servers though it wroks charm in others too.Following steps are to be done inorder to build cosmic
 1. Clone this repository
-  ```
-  git clone https://www.github.com/sreyas-sreelal/Cosmic.git
-  ```
-2. Use pip to install dependencies
-  ```
-  pip install -r requirements.txt
-  ```
-3. Add COSMIC_TOKEN to environment variables with your token as value
-4. Run bot_main.py file
-  ```
-  python3 bot_main.py
-  ```
-## Dependencies
-* Discordpy
-* BeautifulSoup
-* ffmpeg
-* Youtubedl
+    ```
+    git clone https://www.github.com/sreyas-sreelal/Cosmic.git
+    ```
+2. Use cargo to build
+    ```
+    cargo build --release
+    ```
+3. Add `COSMIC_TOKEN` to environment variables with your token as value
+
+4. Run
+    ```
+    ./cosmic
+    ```
+## Notes
+Cosmic requires ffmpeg and youtubedl for audio processing.So install them before using the bot.

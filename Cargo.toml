@@ -1,0 +1,18 @@
+[package]
+name = "cosmic"
+version = "0.1.0"
+authors = ["SyS <sreyassreelal@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serenity = {git = "https://github.com/Sreyas-Sreelal/serenity",branch="youtubedl_search",features = ["voice"]}
+log = "0.4"
+minihttp = {git = "https://github.com/Sreyas-Sreelal/minihttp"}
+serde = "1.0"
+serde_json = "1.0"
+env_logger = "0.6"
+rand = "0.7"
+eliza = "1.0.0"
+regex = "1.1"
+lazy_static = "1.3"
+scraper = "0.10"
