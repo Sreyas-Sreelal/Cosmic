@@ -1,1 +1,1 @@
-worker: ./target/release/Cosmic
+worker: ./target/release/cosmic
