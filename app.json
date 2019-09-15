@@ -1,0 +1,25 @@
+{
+    "name": "Cosmic",
+    "description": "Mutli purpose discord bot written in rust",
+    "keywords": [
+      "Discord",
+      "Music",
+      "bot",
+      "mutlipurpose",
+      "rust"
+    ],
+    "repository": "https://github.com/Sreyas-Sreelal/Cosmic",
+    "env": {
+      "COSMIC_TOKEN": {
+        "description": "Provide your bot token",
+        "value": ""
+      }
+    },
+    "buildpacks": [{
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    }, {
+      "url": "https://github.com/hugovelias/heroku-buildpack-youtube-dl.git"
+    }, {
+      "url": "https://github.com/emk/heroku-buildpack-rust.git"
+    }]
+}

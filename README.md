@@ -32,5 +32,9 @@ and more...
     ```
     ./cosmic
     ```
+
+## Deploy On Heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## Notes
 Cosmic requires ffmpeg and youtubedl for audio processing.So install them before using the bot.
