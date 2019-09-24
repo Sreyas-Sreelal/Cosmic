@@ -18,7 +18,7 @@
     "buildpacks": [{
       "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
     }, {
-      "url": "https://github.com/hugovelias/heroku-buildpack-youtube-dl.git"
+      "url": "https://github.com/appositum/heroku-buildpack-youtube-dl.git"
     }, {
       "url": "https://github.com/emk/heroku-buildpack-rust.git"
     }, {
